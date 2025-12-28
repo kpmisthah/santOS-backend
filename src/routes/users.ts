@@ -1,25 +1,10 @@
 import { Router } from 'express';
-import { prisma } from '../lib/prisma';
+import { UserController } from '../controllers/user.controller';
 
 const router = Router();
+const userController = new UserController();
 
 // GET /api/users
-router.get('/', async (req, res) => {
-    try {
-        const users = await prisma.user.findMany({
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                role: true,
-                avatar: true,
-                // Exclude passwordHash
-            }
-        });
-        res.json(users);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch users' });
-    }
-});
+router.get('/', userController.getUsers);
 
 export default router;

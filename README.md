@@ -10,8 +10,28 @@ The API server for **SantaOS**, the North Pole's operating system. Built with No
 ## 🛠️ Tech Stack
 - **Runtime**: Node.js
 - **Framework**: Express
-- **Database**: PostgreSQL
+- **Database**: PostgreSQL (via Prisma ORM)
 - **Language**: TypeScript
+
+## 🏗️ Architecture
+This project follows the **Repository Pattern** to ensure separation of concerns and maintainability.
+
+- **Controllers** (`src/controllers`): Handle HTTP requests, validate input, and send responses.
+- **Services** (`src/services`): Contain business logic (e.g., verifying credentials, calculating scores).
+- **Repositories** (`src/repositories`): Handle direct database interactions using Prisma.
+- **Routes** (`src/routes`): Define API endpoints and map them to controllers.
+
+## 📂 Project Structure
+```text
+src/
+├── controllers/   # Request handlers
+├── services/      # Business logic
+├── repositories/  # Database access
+├── routes/        # API route definitions
+├── lib/           # Shared utilities (Prisma client)
+├── db/            # Database scripts
+└── index.ts       # Entry point
+```
 
 ## 📦 Setup Instructions
 
