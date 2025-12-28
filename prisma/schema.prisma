@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  admin
+  worker
+}
+
+enum Category {
+  nice
+  naughty
+}
+
+enum Priority {
+  high
+  medium
+  low
+}
+
+enum Status {
+  pending
+  approved
+  rejected
+}
+
+enum TaskStatus {
+  pending
+  in_progress @map("in-progress")
+  completed
+}
+
+enum DeliveryStatus {
+  pending
+  in_transit @map("in-transit")
+  delivered
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  name         String
+  role         Role
+  avatar       String?
+  createdAt    DateTime @default(now()) @map("created_at")
+  tasks        Task[]
+
+  @@map("users")
+}
+
+model Child {
+  id        String     @id @default(uuid())
+  name      String
+  age       Int
+  location  String
+  category  Category
+  createdAt DateTime   @default(now()) @map("created_at")
+  wishlists Wishlist[]
+  deliveries Delivery[]
+
+  @@map("children")
+}
+
+model Wishlist {
+  id        String         @id @default(uuid())
+  childId   String         @map("child_id")
+  child     Child          @relation(fields: [childId], references: [id], onDelete: Cascade)
+  items     WishlistItem[]
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @default(now()) @updatedAt @map("updated_at")
+
+  @@map("wishlists")
+}
+
+model WishlistItem {
+  id          String   @id @default(uuid())
+  wishlistId  String   @map("wishlist_id")
+  wishlist    Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+  giftName    String   @map("gift_name")
+  description String?
+  priority    Priority
+  status      Status   @default(pending)
+
+  @@map("wishlist_items")
+}
+
+model Task {
+  id           String     @id @default(uuid())
+  title        String
+  description  String?
+  giftType     String     @map("gift_type")
+  quantity     Int        @default(1)
+  assignedTo   String?    @map("assigned_to")
+  assignee     User?      @relation(fields: [assignedTo], references: [id])
+  status       TaskStatus @default(pending)
+  priority     Priority
+  deadline     DateTime?
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @default(now()) @updatedAt @map("updated_at")
+
+  @@map("tasks")
+}
+
+model Delivery {
+  id           String         @id @default(uuid())
+  childId      String?        @map("child_id")
+  child        Child?         @relation(fields: [childId], references: [id])
+  region       String
+  address      String
+  giftItems    String[]       @map("gift_items")
+  status       DeliveryStatus @default(pending)
+  deliveryDate DateTime?      @map("delivery_date")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @default(now()) @updatedAt @map("updated_at")
+
+  @@map("deliveries")
+}

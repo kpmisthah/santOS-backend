@@ -18,7 +18,7 @@ The API server for **SantaOS**, the North Pole's operating system. Built with No
 We use a **Hybrid** approach: Docker for the database, and local Node.js for the API.
 
 ### 1. Start the Database
-From the root of the project (or where `docker-compose.yml` is):
+From the backend directory (where `docker-compose.yml` is):
 ```bash
 docker compose up -d
 ```
@@ -28,9 +28,26 @@ docker compose up -d
 npm install
 ```
 
-### 3. Run the Server
+### 3. Database Setup (Migrate & Seed)
+Initialize the database schema and load initial data (Santa, Elves, Children):
+```bash
+npx prisma migrate dev --name init
+```
+
+### 4. Build the Project
+Compile the TypeScript code:
+```bash
+npm run build
+```
+
+### 5. Run the Server
+For development (with auto-reload):
 ```bash
 npm run dev
+```
+For production:
+```bash
+npm run start
 ```
 *The server will start on http://localhost:3000*
 
