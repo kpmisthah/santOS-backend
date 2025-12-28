@@ -10,14 +10,17 @@ export class WishlistController {
 
     create = async (req: Request, res: Response): Promise<void> => {
         try {
-            const { childId, items } = req.body;
+            const { name, age, location, status, wishes } = req.body;
 
-            if (!childId || !items || !Array.isArray(items) || items.length === 0) {
-                res.status(400).json({ error: 'Child ID and at least one item are required' });
+            if (!name || !age || !location || !wishes || !Array.isArray(wishes) || wishes.length === 0) {
+                res.status(400).json({ error: 'Name, age, location, and at least one wish are required' });
                 return;
             }
 
-            const result = await this.wishlistService.createWishlist(childId, items);
+            const result = await this.wishlistService.createWishlist(
+                { name, age, location, status },
+                wishes
+            );
             res.status(201).json(result);
         } catch (error: any) {
             console.error('Error creating wishlist:', error);

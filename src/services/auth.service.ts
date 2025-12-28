@@ -16,13 +16,17 @@ export class AuthService {
     }
 
     async login(email: string, role: string, password?: string): Promise<any> {
+        console.log(`Attempting login for: ${email} with role: ${role}`);
         const user = await this.userRepository.findByEmail(email);
+        console.log('User found:', user);
 
         if (!user) {
+            console.error('Login failed: User not found');
             throw new Error('Invalid credentials');
         }
 
         if (user.role !== role) {
+            console.error(`Login failed: Role mismatch. Expected ${user.role}, got ${role}`);
             throw new Error('Invalid role for this user');
         }
 

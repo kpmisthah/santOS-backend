@@ -83,7 +83,7 @@ async function main() {
             giftType: 'Toy',
             quantity: 1,
             priority: 'high',
-            status: TaskStatus.in_progress,
+            status: TaskStatus.pending,
             assignedTo: elf.id,
         },
     });

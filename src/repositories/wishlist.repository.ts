@@ -3,6 +3,13 @@ import { Wishlist, WishlistItem, Prisma, Child } from '@prisma/client';
 
 export class WishlistRepository {
 
+    // Create a new child
+    async createChild(data: Prisma.ChildCreateInput): Promise<Child> {
+        return prisma.child.create({
+            data
+        });
+    }
+
     // Create a new wishlist for a child
     async create(childId: string): Promise<Wishlist> {
         return prisma.wishlist.create({

@@ -1,27 +1,48 @@
 # SantaOS Backend 🎅
 
-The API server for **SantaOS**, the North Pole's operating system. Built with Node.js, Express, and PostgreSQL.
+The API server for **SantaOS**, the North Pole's operating system. Built with Node.js, Express, PostgreSQL, and Prisma ORM.
 
 ## 🚀 Features
-- **RESTful API**: Endpoints for Users, Children, Tasks, Deliveries, Wishlists, and Analytics.
-- **Database**: PostgreSQL integration for structured North Pole data.
-- **Docker Support**: Easy database setup via Docker Compose.
+- **RESTful API**: Comprehensive endpoints for Users, Children, Tasks, Deliveries, Wishlists, and Analytics
+- **Repository Pattern**: Clean architecture with separation of concerns
+- **Database**: PostgreSQL with Prisma ORM for type-safe database access
+- **Docker Support**: Easy database setup via Docker Compose
+- **TypeScript**: Full type safety across the codebase
+- **Authentication**: Role-based access control for Admin and Worker users
+- **Real-time Analytics**: Demand forecasting and production planning
 
 ## 📚 API Documentation
 
 ### Auth
-- `POST /api/auth/login`: Login for Santa and Elves.
+- **POST** `/api/auth/login`
+  - Login for Santa (Admin) and Elves (Workers)
+  - Body: `{ email, password, role }`
+  - Returns: User profile with role information
 
 ### Wishlists
-- `POST /api/wishlists`: Create a new wishlist for a child.
-- `GET /api/wishlists`: Retrieve all wishlists.
+- **POST** `/api/wishlists`
+  - Create a new wishlist (creates child + wishlist + items)
+  - Body: `{ name, age, location, status: 'nice'|'naughty', wishes: [{ item, priority }] }`
+  - Returns: Created child, wishlist, and items
+- **GET** `/api/wishlists`
+  - Retrieve all wishlists with child and item details
+  - Returns: Array of wishlists with nested child and items
 
 ### Analytics
-- `GET /api/analytics/demand`: Get global and regional gift demand.
-- `GET /api/analytics/forecast`: Get production forecast and shortage alerts.
+- **GET** `/api/analytics/demand`
+  - Get global and regional gift demand aggregation
+  - Returns: `{ global_demand, regional_demand }`
+- **GET** `/api/analytics/forecast`
+  - Get production forecast and shortage alerts
+  - Returns: Recommended production quantities per gift
+- **GET** `/api/analytics/stats`
+  - Get dashboard statistics (children, tasks, deliveries counts)
+  - Returns: Aggregated counts for dashboard
 
 ### Users
-- `GET /api/users`: Get list of system users.
+- **GET** `/api/users`
+  - Get list of system users (Santa, Elves)
+  - Returns: Array of users (excluding passwords)
 
 ## 🛠️ Tech Stack
 - **Runtime**: Node.js
@@ -64,19 +85,36 @@ docker compose up -d
 npm install
 ```
 
-### 3. Database Setup (Migrate & Seed)
-Initialize the database schema and load initial data (Santa, Elves, Children):
+### 3. Configure Environment
+Create a `.env` file in the backend directory:
+```env
+PORT=3000
+DATABASE_URL=postgres://santa:northpole123@localhost:5432/santaos
+```
+
+### 4. Database Setup (Migrate & Seed)
+Initialize the database schema:
 ```bash
 npx prisma migrate dev --name init
 ```
 
-### 4. Build the Project
+Seed the database with initial data (Santa, Elves, sample children):
+```bash
+npx prisma db seed
+```
+
+This creates:
+- **Admin User**: `santa@northpole.com` (password: `hohoho`)
+- **Worker User**: `elf@workshop.com` (password: `hohoho`)
+- Sample children and wishlists
+
+### 5. Build the Project
 Compile the TypeScript code:
 ```bash
 npm run build
 ```
 
-### 5. Run the Server
+### 6. Run the Server
 For development (with auto-reload):
 ```bash
 npm run dev
@@ -87,11 +125,18 @@ npm run start
 ```
 *The server will start on http://localhost:3000*
 
-## 📝 Environment Variables
-Create a `.env` file in this directory:
-```env
-PORT=3000
-DATABASE_URL=postgres://santa:northpole123@localhost:5432/santaos
+## 🔧 Development Tools
+
+### Prisma Studio
+View and edit your database in a GUI:
+```bash
+npx prisma studio
+```
+
+### Database Reset
+To reset the database and re-seed:
+```bash
+npx prisma migrate reset
 ```
 
 ## 📄 License
