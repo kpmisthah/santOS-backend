@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # PostageSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: santaos-db
+    restart: always
+    environment:
+      POSTGRES_USER: santa
+      POSTGRES_PASSWORD: northpole123
+      POSTGRES_DB: santaos
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
