@@ -58,4 +58,37 @@ export class AnalyticsRepository {
             ORDER BY count DESC
         `;
     }
+
+    async getDashboardStats() {
+        const [
+            totalChildren,
+            totalGifts,
+            pendingTasks,
+            completedTasks,
+            pendingDeliveries,
+            completedDeliveries,
+            niceChildren,
+            naughtyChildren
+        ] = await Promise.all([
+            prisma.child.count(),
+            prisma.wishlistItem.count(),
+            prisma.task.count({ where: { status: TaskStatus.pending } }),
+            prisma.task.count({ where: { status: TaskStatus.completed } }),
+            prisma.delivery.count({ where: { status: 'pending' } }), // Assuming string literal if enum import issue
+            prisma.delivery.count({ where: { status: 'delivered' } }),
+            prisma.child.count({ where: { category: 'nice' } }),
+            prisma.child.count({ where: { category: 'naughty' } })
+        ]);
+
+        return {
+            totalChildren,
+            totalGifts,
+            pendingTasks,
+            completedTasks,
+            pendingDeliveries,
+            completedDeliveries,
+            niceChildren,
+            naughtyChildren
+        };
+    }
 }

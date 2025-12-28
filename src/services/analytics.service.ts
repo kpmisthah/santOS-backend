@@ -49,4 +49,8 @@ export class AnalyticsService {
 
         return forecast;
     }
+
+    async getDashboardStats() {
+        return this.analyticsRepo.getDashboardStats();
+    }
 }

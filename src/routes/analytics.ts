@@ -6,5 +6,6 @@ const analyticsController = new AnalyticsController();
 
 router.get('/demand', analyticsController.getDemand);
 router.get('/forecast', analyticsController.getForecast);
+router.get('/stats', analyticsController.getStats);
 
 export default router;
