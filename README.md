@@ -3,9 +3,25 @@
 The API server for **SantaOS**, the North Pole's operating system. Built with Node.js, Express, and PostgreSQL.
 
 ## 🚀 Features
-- **RESTful API**: Endpoints for Users, Children, Tasks, and Deliveries.
+- **RESTful API**: Endpoints for Users, Children, Tasks, Deliveries, Wishlists, and Analytics.
 - **Database**: PostgreSQL integration for structured North Pole data.
 - **Docker Support**: Easy database setup via Docker Compose.
+
+## 📚 API Documentation
+
+### Auth
+- `POST /api/auth/login`: Login for Santa and Elves.
+
+### Wishlists
+- `POST /api/wishlists`: Create a new wishlist for a child.
+- `GET /api/wishlists`: Retrieve all wishlists.
+
+### Analytics
+- `GET /api/analytics/demand`: Get global and regional gift demand.
+- `GET /api/analytics/forecast`: Get production forecast and shortage alerts.
+
+### Users
+- `GET /api/users`: Get list of system users.
 
 ## 🛠️ Tech Stack
 - **Runtime**: Node.js
