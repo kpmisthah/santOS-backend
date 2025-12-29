@@ -46,4 +46,9 @@ export class WishlistService {
     async getAllWishlists() {
         return this.wishlistRepo.findAll();
     }
+
+    async toggleChildCategory(childId: string, newCategory: 'nice' | 'naughty') {
+        const categoryEnum = newCategory === 'nice' ? Category.nice : Category.naughty;
+        return this.wishlistRepo.updateChildCategory(childId, categoryEnum);
+    }
 }

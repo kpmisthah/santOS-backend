@@ -59,4 +59,12 @@ export class WishlistRepository {
             where: { id: childId }
         });
     }
+
+    // Update child's category (nice/naughty)
+    async updateChildCategory(childId: string, category: 'nice' | 'naughty'): Promise<Child> {
+        return prisma.child.update({
+            where: { id: childId },
+            data: { category }
+        });
+    }
 }

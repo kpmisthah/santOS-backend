@@ -41,4 +41,22 @@ export class WishlistController {
             res.status(500).json({ error: 'Failed to fetch wishlists' });
         }
     };
+
+    toggleCategory = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { childId } = req.params;
+            const { category } = req.body;
+
+            if (!category || (category !== 'nice' && category !== 'naughty')) {
+                res.status(400).json({ error: 'Valid category (nice/naughty) is required' });
+                return;
+            }
+
+            const updatedChild = await this.wishlistService.toggleChildCategory(childId, category);
+            res.json(updatedChild);
+        } catch (error) {
+            console.error('Error toggling category:', error);
+            res.status(500).json({ error: 'Failed to update category' });
+        }
+    };
 }
