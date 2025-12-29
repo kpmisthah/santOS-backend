@@ -27,6 +27,22 @@ The API server for **SantaOS**, the North Pole's operating system. Built with No
 - **GET** `/api/wishlists`
   - Retrieve all wishlists with child and item details
   - Returns: Array of wishlists with nested child and items
+- **PATCH** `/api/wishlists/child/:childId/category`
+  - Toggle child's Nice/Naughty status
+  - Body: `{ category: 'nice'|'naughty' }`
+  - Returns: Updated child object
+
+### Tasks
+- **GET** `/api/tasks/user/:userId`
+  - Get all tasks assigned to a specific user (elf)
+  - Returns: Array of tasks with details
+- **PATCH** `/api/tasks/:taskId/status`
+  - Update task status
+  - Body: `{ status: 'pending'|'in_progress'|'completed' }`
+  - Returns: Updated task object
+- **GET** `/api/tasks`
+  - Get all tasks with assignee details
+  - Returns: Array of all tasks
 
 ### Analytics
 - **GET** `/api/analytics/demand`
