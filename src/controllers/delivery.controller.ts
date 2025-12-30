@@ -103,6 +103,12 @@ export class DeliveryController {
         try {
             const { trackingId } = req.params;
             const trackingInfo = await this.deliveryService.trackDelivery(trackingId);
+            
+            // Prevent caching so progress updates show immediately
+            res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+            res.setHeader('Pragma', 'no-cache');
+            res.setHeader('Expires', '0');
+            
             res.json(trackingInfo);
         } catch (error: any) {
             console.error('Error tracking delivery:', error);

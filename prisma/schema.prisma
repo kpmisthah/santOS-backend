@@ -30,13 +30,13 @@ enum Status {
 
 enum TaskStatus {
   pending
-  in_progress @map("in-progress")
+  in_progress
   completed
 }
 
 enum DeliveryStatus {
   pending
-  in_transit @map("in-transit")
+  in_transit
   delivered
 }
 

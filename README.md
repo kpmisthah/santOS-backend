@@ -90,7 +90,7 @@ The complete API server for **SantaOS** - The North Pole's Christmas Management 
   - Returns: Updated delivery object
 - **GET** `/api/deliveries/track/:trackingId`
   - Track delivery by tracking ID (public endpoint)
-  - Returns: Limited delivery info (id, status, region, dates)
+  - Returns: Limited delivery info (id, status, region, dates, **productionStatus, productionProgress**)
 
 ### Analytics
 - **GET** `/api/analytics/demand`

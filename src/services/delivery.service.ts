@@ -1,5 +1,6 @@
 import { DeliveryRepository } from '../repositories/delivery.repository';
 import { DeliveryStatus } from '@prisma/client';
+import { prisma } from '../lib/prisma';
 
 export class DeliveryService {
     private deliveryRepo: DeliveryRepository;
@@ -77,10 +78,34 @@ export class DeliveryService {
             throw new Error('Tracking ID not found');
         }
 
+        // Check production status of tasks for this child
+        let productionStatus = 'pending';
+        let productionProgress = 0;
+
+        if (delivery.childId && (delivery as any).child?.name) {
+            const task = await prisma.task.findFirst({
+                where: {
+                    title: { contains: (delivery as any).child.name, mode: 'insensitive' }
+                }
+            });
+
+            if (task) {
+                productionProgress = task.progress || 0;
+                if (task.status === 'completed') {
+                    productionStatus = 'completed';
+                    productionProgress = 100;
+                } else if (task.status === 'in_progress') {
+                    productionStatus = 'in_progress';
+                }
+            }
+        }
+
         // Return limited info for public tracking
         return {
             id: delivery.id,
             status: delivery.status,
+            productionStatus,
+            productionProgress,
             region: delivery.region,
             deliveryDate: delivery.deliveryDate,
             createdAt: delivery.createdAt,
