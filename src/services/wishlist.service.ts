@@ -59,7 +59,7 @@ export class WishlistService {
             wishlist,
             items: addedItems,
             trackingId: delivery.id,
-            trackingCode: `SANTA-${delivery.id.substring(0, 8).toUpperCase()}`
+            trackingCode: `SANTA-${delivery.id.toUpperCase()}`
         };
     }
 

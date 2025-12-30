@@ -97,4 +97,36 @@ export class TaskController {
             res.status(500).json({ error: 'Failed to assign task' });
         }
     };
+
+    delete = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { taskId } = req.params;
+            await this.taskService.deleteTask(taskId);
+            res.status(204).send();
+        } catch (error) {
+            console.error('Error deleting task:', error);
+            res.status(500).json({ error: 'Failed to delete task' });
+        }
+    };
+
+    updateDetails = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { taskId } = req.params;
+            const { progress, notes } = req.body;
+
+            if (progress !== undefined && (progress < 0 || progress > 100)) {
+                res.status(400).json({ error: 'Progress must be between 0 and 100' });
+                return;
+            }
+
+            const updatedTask = await this.taskService.updateTaskDetails(taskId, {
+                progress: progress !== undefined ? Number(progress) : undefined,
+                notes
+            });
+            res.json(updatedTask);
+        } catch (error) {
+            console.error('Error updating task details:', error);
+            res.status(500).json({ error: 'Failed to update task details' });
+        }
+    };
 }

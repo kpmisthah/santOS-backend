@@ -9,5 +9,7 @@ router.patch('/:taskId/status', taskController.updateStatus);
 router.patch('/:taskId/assign', taskController.assign);
 router.post('/', taskController.create);
 router.get('/', taskController.getAll);
+router.delete('/:taskId', taskController.delete);
+router.patch('/:taskId', taskController.updateDetails);
 
 export default router;

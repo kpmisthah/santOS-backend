@@ -99,6 +99,8 @@ model Task {
   assignee     User?      @relation(fields: [assignedTo], references: [id])
   status       TaskStatus @default(pending)
   priority     Priority
+  progress     Int        @default(0)
+  notes        String?
   deadline     DateTime?
   createdAt    DateTime   @default(now()) @map("created_at")
   updatedAt    DateTime   @default(now()) @updatedAt @map("updated_at")

@@ -56,4 +56,12 @@ export class TaskService {
             }
         });
     }
+
+    async deleteTask(id: string) {
+        return this.taskRepo.delete(id);
+    }
+
+    async updateTaskDetails(taskId: string, data: { progress?: number; notes?: string }) {
+        return this.taskRepo.update(taskId, data);
+    }
 }

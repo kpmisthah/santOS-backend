@@ -66,4 +66,11 @@ export class TaskRepository {
             }
         });
     }
+
+    // Delete task
+    async delete(id: string): Promise<Task> {
+        return prisma.task.delete({
+            where: { id }
+        });
+    }
 }

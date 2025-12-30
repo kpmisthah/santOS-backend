@@ -65,6 +65,13 @@ The complete API server for **SantaOS** - The North Pole's Christmas Management 
   - Assign task to a worker
   - Body: `{ userId }`
   - Returns: Updated task object
+- **DELETE** `/api/tasks/:taskId`
+  - Delete a task
+  - Returns: 204 No Content
+- **PATCH** `/api/tasks/:taskId`
+  - Update task details (progress/notes)
+  - Body: `{ progress, notes }`
+  - Returns: Updated task object
 
 ### Deliveries
 - **GET** `/api/deliveries`
