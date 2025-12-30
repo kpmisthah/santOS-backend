@@ -1,11 +1,14 @@
 import { WishlistRepository } from '../repositories/wishlist.repository';
+import { DeliveryRepository } from '../repositories/delivery.repository';
 import { Priority, Status, Category } from '@prisma/client';
 
 export class WishlistService {
     private wishlistRepo: WishlistRepository;
+    private deliveryRepo: DeliveryRepository;
 
     constructor() {
         this.wishlistRepo = new WishlistRepository();
+        this.deliveryRepo = new DeliveryRepository();
     }
 
     async createWishlist(
@@ -40,7 +43,24 @@ export class WishlistService {
             addedItems.push(newItem);
         }
 
-        return { child, wishlist, items: addedItems };
+        // 4. Create a delivery for tracking
+        const delivery = await this.deliveryRepo.create({
+            child: {
+                connect: { id: child.id }
+            },
+            region: childData.location,
+            address: `${childData.name}'s address in ${childData.location}`,
+            giftItems: items.map(i => i.item),
+            deliveryDate: new Date(new Date().getFullYear(), 11, 25) // December 25th
+        });
+
+        return {
+            child,
+            wishlist,
+            items: addedItems,
+            trackingId: delivery.id,
+            trackingCode: `SANTA-${delivery.id.substring(0, 8).toUpperCase()}`
+        };
     }
 
     async getAllWishlists() {
