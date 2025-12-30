@@ -1,16 +1,11 @@
-# SantaOS Backend 🎅
+# SantaOS Backend
 
 The complete API server for **SantaOS** - The North Pole's Christmas Management System. Built with Node.js, Express, PostgreSQL, and Prisma ORM.
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-Latest-green.svg)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express-4.19.2-lightgrey.svg)](https://expressjs.com/)
-[![Prisma](https://img.shields.io/badge/Prisma-7.2.0-2D3748.svg)](https://www.prisma.io/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-336791.svg)](https://www.postgresql.org/)
 
 ---
 
-## 🚀 Features
+## Features
 
 - **RESTful API**: Comprehensive endpoints for Users, Children, Tasks, Wishlists, Deliveries, and Analytics
 - **Repository Pattern**: Clean architecture with separation of concerns
@@ -22,6 +17,17 @@ The complete API server for **SantaOS** - The North Pole's Christmas Management 
 - **Delivery Management**: Full CRUD operations with public tracking support
 - **Task Management**: Create, assign, and track tasks for workers
 - **Automatic Delivery Creation**: Wishlists automatically generate trackable deliveries
+
+---
+
+## 📸 Application Preview (Frontend)
+
+This backend serves as the core engine for the SantaOS Frontend.
+
+| Admin Dashboard | Task Management |
+|:---:|:---:|
+| ![Admin Dashboard](./screenshots/admin-dashboard.png) | ![Tasks](./screenshots/admin-tasks.png) |
+| *Analytics & Stats Data* | *Task Assignment Data* |
 
 ---
 
