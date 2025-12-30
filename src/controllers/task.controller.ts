@@ -46,4 +46,55 @@ export class TaskController {
             res.status(500).json({ error: 'Failed to fetch tasks' });
         }
     };
+
+    create = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { title, description, giftType, quantity, assignedTo, priority, deadline } = req.body;
+
+            // Validation
+            if (!title || !giftType || !priority) {
+                res.status(400).json({ error: 'Title, giftType, and priority are required' });
+                return;
+            }
+
+            if (!['high', 'medium', 'low'].includes(priority.toLowerCase())) {
+                res.status(400).json({ error: 'Priority must be high, medium, or low' });
+                return;
+            }
+
+            const taskData = {
+                title,
+                description,
+                giftType,
+                quantity: quantity ? parseInt(quantity) : 1,
+                assignedTo,
+                priority: priority.toLowerCase(),
+                deadline: deadline ? new Date(deadline) : undefined
+            };
+
+            const newTask = await this.taskService.createTask(taskData);
+            res.status(201).json(newTask);
+        } catch (error) {
+            console.error('Error creating task:', error);
+            res.status(500).json({ error: 'Failed to create task' });
+        }
+    };
+
+    assign = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const { taskId } = req.params;
+            const { userId } = req.body;
+
+            if (!userId) {
+                res.status(400).json({ error: 'userId is required' });
+                return;
+            }
+
+            const updatedTask = await this.taskService.assignTask(taskId, userId);
+            res.json(updatedTask);
+        } catch (error) {
+            console.error('Error assigning task:', error);
+            res.status(500).json({ error: 'Failed to assign task' });
+        }
+    };
 }

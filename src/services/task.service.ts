@@ -30,4 +30,30 @@ export class TaskService {
     async getAllTasks() {
         return this.taskRepo.findAll();
     }
+
+    async createTask(data: {
+        title: string;
+        description?: string;
+        giftType: string;
+        quantity?: number;
+        assignedTo?: string;
+        priority: 'high' | 'medium' | 'low';
+        deadline?: Date;
+    }) {
+        const { priority, ...rest } = data;
+
+        return this.taskRepo.create({
+            ...rest,
+            priority: priority.toLowerCase() as 'high' | 'medium' | 'low',
+            quantity: data.quantity || 1
+        });
+    }
+
+    async assignTask(taskId: string, userId: string) {
+        return this.taskRepo.update(taskId, {
+            assignee: {
+                connect: { id: userId }
+            }
+        });
+    }
 }

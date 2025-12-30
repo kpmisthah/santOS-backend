@@ -33,4 +33,37 @@ export class TaskRepository {
             orderBy: { createdAt: 'desc' }
         });
     }
+
+    // Create a new task
+    async create(data: Prisma.TaskCreateInput): Promise<Task> {
+        return prisma.task.create({
+            data,
+            include: {
+                assignee: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Update task (for assignment and other updates)
+    async update(taskId: string, data: Prisma.TaskUpdateInput): Promise<Task> {
+        return prisma.task.update({
+            where: { id: taskId },
+            data,
+            include: {
+                assignee: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true
+                    }
+                }
+            }
+        });
+    }
 }

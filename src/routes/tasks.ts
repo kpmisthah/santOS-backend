@@ -6,6 +6,8 @@ const taskController = new TaskController();
 
 router.get('/user/:userId', taskController.getByUser);
 router.patch('/:taskId/status', taskController.updateStatus);
+router.patch('/:taskId/assign', taskController.assign);
+router.post('/', taskController.create);
 router.get('/', taskController.getAll);
 
 export default router;
