@@ -3,7 +3,6 @@ import { TaskStatus } from '@prisma/client';
 
 export class AnalyticsRepository {
 
-    // 1. Group toys by name and count demand (Wishlist items pending or approved)
     async getGlobalDemand() {
         return prisma.wishlistItem.groupBy({
             by: ['giftName'],
