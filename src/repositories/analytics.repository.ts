@@ -17,10 +17,9 @@ export class AnalyticsRepository {
         });
     }
 
-    // 2. Count current stock (Completed Tasks)
     async getGlobalStock() {
         return prisma.task.groupBy({
-            by: ['giftType'], // Assuming giftType corresponds to giftName roughly, or we map it
+            by: ['giftType'],
             where: {
                 status: TaskStatus.completed
             },
@@ -30,9 +29,6 @@ export class AnalyticsRepository {
         });
     }
 
-    // 3. Get regional demand (Requires joining Wishlist -> Child)
-    // Prisma groupBy doesn't support deep relations easily, so we fetch and aggregate or use raw query.
-    // Raw query is often faster for analytics.
     async getRegionalDemand() {
         /*
          Query:
