@@ -2,7 +2,6 @@ import { prisma } from '../lib/prisma';
 import { Delivery, Prisma, DeliveryStatus } from '@prisma/client';
 
 export class DeliveryRepository {
-    // Get all deliveries
     async findAll(): Promise<Delivery[]> {
         return prisma.delivery.findMany({
             include: {
@@ -19,7 +18,6 @@ export class DeliveryRepository {
         });
     }
 
-    // Get delivery by ID
     async findById(id: string): Promise<Delivery | null> {
         return prisma.delivery.findUnique({
             where: { id },
@@ -36,7 +34,6 @@ export class DeliveryRepository {
         });
     }
 
-    // Create a new delivery
     async create(data: Prisma.DeliveryCreateInput): Promise<Delivery> {
         return prisma.delivery.create({
             data,
