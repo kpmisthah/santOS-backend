@@ -50,7 +50,6 @@ export class DeliveryRepository {
         });
     }
 
-    // Update delivery status
     async updateStatus(id: string, status: DeliveryStatus): Promise<Delivery> {
         return prisma.delivery.update({
             where: { id },
@@ -68,7 +67,6 @@ export class DeliveryRepository {
         });
     }
 
-    // Update delivery
     async update(id: string, data: Prisma.DeliveryUpdateInput): Promise<Delivery> {
         return prisma.delivery.update({
             where: { id },
