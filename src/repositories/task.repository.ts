@@ -2,7 +2,6 @@ import { prisma } from '../lib/prisma';
 import { Task, Prisma, TaskStatus } from '@prisma/client';
 
 export class TaskRepository {
-    // Get all 
     async findByUserId(userId: string): Promise<Task[]> {
         return prisma.task.findMany({
             where: { assignedTo: userId },
