@@ -9,7 +9,7 @@ export class TaskRepository {
         });
     }
 
-    // Update task status
+    // Update 
     async updateStatus(taskId: string, status: TaskStatus): Promise<Task> {
         return prisma.task.update({
             where: { id: taskId },
